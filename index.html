@@ -65,7 +65,6 @@
       z-index: 2;
     }
     
-    /* Deeper red header/footer to match main PawPrint branding */
     .header-red {
       background: linear-gradient(to right, #7F0F2A, #B91C1C);
       box-shadow: 0 4px 12px rgba(127, 15, 42, 0.55);
@@ -84,7 +83,7 @@
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans">
-  <!-- HEADER -->
+  <!-- HEADER - deeper red match -->
   <header class="header-red border-b-2 border-amber-400 py-5 shadow-2xl">
     <div class="max-w-7xl mx-auto px-8 flex items-center justify-between">
       <div class="flex items-center gap-4">
@@ -116,7 +115,6 @@
           <button onclick="loadTemplate(3)" class="bg-zinc-800 hover:bg-red-700 hover:text-white p-4 rounded-2xl text-sm font-semibold transition">Bold</button>
           <button onclick="loadTemplate(4)" class="col-span-2 bg-zinc-800 hover:bg-red-700 hover:text-white p-4 rounded-2xl text-sm font-semibold transition">Start Blank</button>
         </div>
-        <button onclick="loadSavedDesign()" class="mt-4 w-full py-3 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-2xl text-sm font-semibold">📂 Load Last Saved Design</button>
       </div>
 
       <!-- Card Finish -->
@@ -162,31 +160,67 @@
               <span id="frontScaleValue" class="text-xs font-mono w-8">1.00x</span>
             </div>
           </div>
-          <div class="space-y-4">
-            <div class="flex justify-between items-baseline">
+          <!-- Company with alignment -->
+          <div>
+            <div class="flex justify-between items-baseline mb-1">
               <label class="text-zinc-400">Company Name</label>
               <div class="flex gap-1 text-xs">
-                <button onclick="setAlignment('company','left')" class="px-2 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded">L</button>
-                <button onclick="setAlignment('company','center')" class="px-2 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded">C</button>
-                <button onclick="setAlignment('company','right')" class="px-2 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded">R</button>
-                <button onclick="toggleStyle('company','bold')" id="company-bold-btn" class="font-bold px-2">B</button>
-                <button onclick="toggleStyle('company','italic')" id="company-italic-btn" class="italic px-2">I</button>
+                <button onclick="setAlignment('company','left')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">L</button>
+                <button onclick="setAlignment('company','center')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">C</button>
+                <button onclick="setAlignment('company','right')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">R</button>
+                <button onclick="toggleStyle('company','bold')" id="company-bold-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl font-bold">B</button>
+                <button onclick="toggleStyle('company','italic')" id="company-italic-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl italic">I</button>
               </div>
             </div>
             <input id="company" placeholder="Company Name" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-            
-            <div class="grid grid-cols-2 gap-4">
-              <input id="tagline" placeholder="Tagline" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-              <input id="name" placeholder="Full Name" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
+          </div>
+          <!-- Tagline with alignment -->
+          <div>
+            <div class="flex justify-between items-baseline mb-1">
+              <label class="text-zinc-400">Tagline</label>
+              <div class="flex gap-1 text-xs">
+                <button onclick="setAlignment('tagline','left')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">L</button>
+                <button onclick="setAlignment('tagline','center')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">C</button>
+                <button onclick="setAlignment('tagline','right')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">R</button>
+                <button onclick="toggleStyle('tagline','bold')" id="tagline-bold-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl font-bold">B</button>
+                <button onclick="toggleStyle('tagline','italic')" id="tagline-italic-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl italic">I</button>
+              </div>
             </div>
-            
+            <input id="tagline" placeholder="Tagline" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
+          </div>
+          <!-- Name with alignment -->
+          <div>
+            <div class="flex justify-between items-baseline mb-1">
+              <label class="text-zinc-400">Full Name</label>
+              <div class="flex gap-1 text-xs">
+                <button onclick="setAlignment('name','left')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">L</button>
+                <button onclick="setAlignment('name','center')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">C</button>
+                <button onclick="setAlignment('name','right')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">R</button>
+                <button onclick="toggleStyle('name','bold')" id="name-bold-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl font-bold">B</button>
+                <button onclick="toggleStyle('name','italic')" id="name-italic-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl italic">I</button>
+              </div>
+            </div>
+            <input id="name" placeholder="Full Name" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
+          </div>
+          <!-- Title with alignment -->
+          <div>
+            <div class="flex justify-between items-baseline mb-1">
+              <label class="text-zinc-400">Job Title</label>
+              <div class="flex gap-1 text-xs">
+                <button onclick="setAlignment('title','left')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">L</button>
+                <button onclick="setAlignment('title','center')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">C</button>
+                <button onclick="setAlignment('title','right')" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl">R</button>
+                <button onclick="toggleStyle('title','bold')" id="title-bold-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl font-bold">B</button>
+                <button onclick="toggleStyle('title','italic')" id="title-italic-btn" class="px-3 py-1 bg-zinc-800 hover:bg-amber-400 hover:text-black rounded-xl italic">I</button>
+              </div>
+            </div>
             <input id="title" placeholder="Job Title" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-            
-            <div class="grid grid-cols-3 gap-3">
-              <input id="phone" placeholder="Phone" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-              <input id="email" placeholder="Email" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-              <input id="website" placeholder="Website" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
-            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <input id="phone" placeholder="Phone" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
+            <input id="email" placeholder="Email" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
+            <input id="website" placeholder="Website" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
           </div>
         </div>
       </div>
@@ -237,7 +271,7 @@
       </div>
 
       <div id="3dContainer" class="hidden w-full max-w-[600px] flex-col items-center">
-        <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">3D ROTATABLE CARD</div>
+        <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">3D ROTATABLE CARD • TEXT ON TOP OF GRAPHICS</div>
         <div id="threeCanvasContainer" class="three-container"></div>
         <button onclick="toggle3D()" class="mt-4 text-amber-400 hover:text-white text-sm flex items-center gap-2">
           <i class="fas fa-arrow-left"></i> BACK TO 2D EDITING
@@ -267,7 +301,7 @@
     let threeScene, threeCamera, threeRenderer, cardMesh;
     let is3D = false;
 
-    // ============== INIT PREVIEWS ==============
+    // ============== INIT PREVIEWS (z-index locked) ==============
     function initPreviews() {
       const front = document.getElementById('frontPreview');
       front.innerHTML = `
@@ -347,7 +381,7 @@
       // Back
       document.getElementById('backTextDisplay').textContent = document.getElementById('backText').value || 'Additional information, address, or special notes go here...';
       document.getElementById('backTextDisplay').style.color = document.getElementById('backTextColor').value;
-      document.getElementById('backPreview').style.background = document.getElementById('backBg') ? document.getElementById('backBg').value : '#f8f5f2';
+      document.getElementById('backPreview').style.background = '#f8f5f2';
 
       applyStyles();
       generateRealQR();
@@ -395,14 +429,7 @@
       const container = document.getElementById('qrContainer');
       container.innerHTML = '';
       const website = document.getElementById('website').value || 'https://pawprintamerica.com';
-      new QRCode(container, {
-        text: website,
-        width: 110,
-        height: 110,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
+      new QRCode(container, { text: website, width: 110, height: 110, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
     }
 
     // ============== FINISH & FONT ==============
@@ -436,39 +463,7 @@
       updatePreview();
     }
 
-    // ============== SAVE / LOAD ==============
-    function saveDesign() {
-      const design = {
-        company: document.getElementById('company').value,
-        tagline: document.getElementById('tagline').value,
-        name: document.getElementById('name').value,
-        title: document.getElementById('title').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        website: document.getElementById('website').value,
-        backText: document.getElementById('backText').value,
-        frontBg: document.getElementById('frontBg').value,
-        frontText: document.getElementById('frontText').value,
-        backTextColor: document.getElementById('backTextColor').value,
-        currentFont: currentFont
-      };
-      localStorage.setItem('pawprintCardDesign', JSON.stringify(design));
-    }
-
-    function loadSavedDesign() {
-      const saved = localStorage.getItem('pawprintCardDesign');
-      if (!saved) return alert("No saved design found.");
-      const design = JSON.parse(saved);
-      Object.keys(design).forEach(key => {
-        const el = document.getElementById(key);
-        if (el) el.value = design[key];
-      });
-      currentFont = design.currentFont || 'Inter';
-      document.getElementById('fontSelect').value = currentFont;
-      updatePreview();
-    }
-
-    // ============== 3D PREVIEW ==============
+    // ============== 3D PREVIEW (fixed capture order) ==============
     function init3D() {
       const container = document.getElementById('threeCanvasContainer');
       container.innerHTML = '';
@@ -501,10 +496,7 @@
       });
       container.addEventListener('mouseup', () => isRotating = false);
 
-      function animate() {
-        requestAnimationFrame(animate);
-        threeRenderer.render(threeScene, threeCamera);
-      }
+      function animate() { requestAnimationFrame(animate); threeRenderer.render(threeScene, threeCamera); }
       animate();
     }
 
@@ -527,11 +519,16 @@
 
     function toggle3D() {
       is3D = !is3D;
-      document.getElementById('2dContainer').classList.toggle('hidden', is3D);
-      document.getElementById('2dContainerBack').classList.toggle('hidden', is3D);
-      document.getElementById('3dContainer').classList.toggle('hidden', !is3D);
-      if (is3D && !threeScene) init3D();
-      else if (is3D) update3DTextures();
+      if (is3D) {
+        updatePreview();           // ensure latest content
+        if (!threeScene) init3D();
+        update3DTextures();        // capture while 2D is still visible
+        document.getElementById('2dContainer').classList.add('hidden');
+        document.getElementById('2dContainerBack').classList.add('hidden');
+      } else {
+        document.getElementById('2dContainer').classList.remove('hidden');
+        document.getElementById('2dContainerBack').classList.remove('hidden');
+      }
     }
 
     // ============== EXPORT & EMAIL ==============
@@ -566,9 +563,7 @@
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      // Auto-save every 3 seconds
-      setInterval(saveDesign, 3000);
-      console.log('%c🚀 PawPrint Business Card Designer - FULLY FIXED & READY', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — FIXED: text on top, alignment for all fields, 3D now renders correctly', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
