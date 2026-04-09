@@ -13,34 +13,70 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Roboto+Slab:wght@400;700&family=Poppins:wght@400;600&family=Montserrat:wght@400;700&family=Oswald:wght@400;700&family=Lora:wght@400;700&family=Raleway:wght@400;700&display=swap');
 
     .card {
-      width: 560px; height: 320px; border-radius: 20px;
+      width: 560px;
+      height: 320px;
+      border-radius: 20px;
       background: linear-gradient(145deg, #f8f5f2, #ffffff);
       box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75),
                   inset 0 12px 24px rgba(255,255,255,0.75),
                   inset 0 -8px 20px rgba(0,0,0,0.2),
                   0 0 0 1px #d1c8c0;
-      overflow: hidden; position: relative; font-family: 'Inter', system-ui, sans-serif;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Inter', system-ui, sans-serif;
     }
+    
     .card.gloss::before {
-      content: ''; position: absolute; inset: 0;
+      content: '';
+      position: absolute;
+      inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.35) 100%);
-      pointer-events: none; z-index: 10; mix-blend-mode: screen; animation: gloss-shine 8s linear infinite;
+      pointer-events: none;
+      z-index: 10;
+      mix-blend-mode: screen;
+      animation: gloss-shine 8s linear infinite;
     }
-    @keyframes gloss-shine { 0% { transform: translateX(-150%) skew(20deg); } 100% { transform: translateX(300%) skew(20deg); } }
+    
+    @keyframes gloss-shine {
+      0% { transform: translateX(-150%) skew(20deg); }
+      100% { transform: translateX(300%) skew(20deg); }
+    }
+    
     .card::before {
-      content: ''; position: absolute; inset: 0;
+      content: '';
+      position: absolute;
+      inset: 0;
       background: repeating-linear-gradient(135deg, transparent, transparent 8px, rgba(139,69,19,0.07) 8px, rgba(139,69,19,0.07) 16px),
                   radial-gradient(circle at 30% 20%, rgba(255,255,255,0.65) 0%, transparent 50%),
                   radial-gradient(circle at 70% 80%, rgba(0,0,0,0.09) 0%, transparent 60%);
-      pointer-events: none; opacity: 0.9; mix-blend-mode: multiply; z-index: 1;
+      pointer-events: none;
+      opacity: 0.9;
+      mix-blend-mode: multiply;
+      z-index: 1;
     }
+    
     .card::after {
-      content: ''; position: absolute; inset: 12px; border: 1px solid rgba(212,175,135,0.3); border-radius: 12px; pointer-events: none; z-index: 2;
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(212,175,135,0.3);
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 2;
     }
-    .header-red { background: linear-gradient(to right, #7F0F2A, #B91C1C); box-shadow: 0 4px 12px rgba(127,15,42,0.55); }
-    .logo-layer { z-index: 5; }
-    .text-layer { z-index: 20; }
-    .three-container { width: 560px; height: 320px; border-radius: 20px; overflow: hidden; box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75); }
+    
+    .header-red {
+      background: linear-gradient(to right, #7F0F2A, #B91C1C);
+      box-shadow: 0 4px 12px rgba(127,15,42,0.55);
+    }
+    
+    .three-container {
+      width: 560px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75);
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans">
@@ -232,7 +268,7 @@
       </div>
 
       <div id="3dContainer" class="hidden w-full max-w-[600px] flex-col items-center">
-        <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">3D ROTATABLE CARD • TEXT ON TOP OF GRAPHICS</div>
+        <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">3D ROTATABLE CARD</div>
         <div id="threeCanvasContainer" class="three-container"></div>
         <button onclick="toggle3D()" class="mt-4 text-amber-400 hover:text-white text-sm flex items-center gap-2">
           <i class="fas fa-arrow-left"></i> BACK TO 2D EDITING
@@ -249,7 +285,12 @@
 
   <script>
     // ============== STATE ==============
-    let styles = { company: { align: 'left', bold: true, italic: false }, tagline: { align: 'left', bold: false, italic: true }, name: { align: 'left', bold: true, italic: false }, title: { align: 'left', bold: false, italic: false } };
+    let styles = {
+      company: { align: 'left', bold: true, italic: false },
+      tagline: { align: 'left', bold: false, italic: true },
+      name: { align: 'left', bold: true, italic: false },
+      title: { align: 'left', bold: false, italic: false }
+    };
     let currentFont = 'Inter';
     let currentFinish = 'matte';
     let frontLogoPos = { x: 40, y: 30 }, frontLogoScale = 1;
@@ -317,7 +358,7 @@
       if (is3D) update3DTextures();
     }
 
-    // ============== UPDATE PREVIEW + FORCE Z-INDEX ==============
+    // ============== UPDATE PREVIEW - FORCE Z-INDEX EVERY TIME ==============
     function updatePreview() {
       // Front
       document.getElementById('frontCompany').textContent = document.getElementById('company').value || 'Company Name';
@@ -331,7 +372,10 @@
       `;
 
       const frontTextColor = document.getElementById('frontText').value;
-      document.querySelectorAll('#frontPreview .text-layer').forEach(el => { el.style.color = frontTextColor; el.style.zIndex = '20'; });
+      document.querySelectorAll('#frontPreview .text-layer').forEach(el => {
+        el.style.color = frontTextColor;
+        el.style.zIndex = '20';
+      });
       document.getElementById('frontPreview').style.background = document.getElementById('frontBg').value;
 
       // Back
@@ -375,7 +419,7 @@
       updatePreview();
     }
 
-    // ============== LOGO UPLOAD (force z-index) ==============
+    // ============== LOGO UPLOAD - FORCE Z-INDEX ==============
     function handleLogoUpload(input, side) {
       const file = input.files[0];
       if (!file) return;
@@ -428,7 +472,7 @@
       updatePreview();
     }
 
-    // ============== 3D (capture while 2D visible) ==============
+    // ============== 3D ==============
     function init3D() {
       const container = document.getElementById('threeCanvasContainer');
       container.innerHTML = '';
@@ -455,7 +499,10 @@
 
       let isRotating = false, prevX = 0;
       container.addEventListener('mousedown', e => { isRotating = true; prevX = e.clientX; });
-      container.addEventListener('mousemove', e => { if (isRotating) cardMesh.rotation.y += (e.clientX - prevX) * 0.005; prevX = e.clientX; });
+      container.addEventListener('mousemove', e => {
+        if (isRotating) cardMesh.rotation.y += (e.clientX - prevX) * 0.005;
+        prevX = e.clientX;
+      });
       container.addEventListener('mouseup', () => isRotating = false);
 
       function animate() { requestAnimationFrame(animate); threeRenderer.render(threeScene, threeCamera); }
@@ -470,8 +517,10 @@
         if (cardMesh) {
           const frontTex = new THREE.CanvasTexture(frontCanvas);
           const backTex = new THREE.CanvasTexture(backCanvas);
-          cardMesh.material[1].map = frontTex; cardMesh.material[1].needsUpdate = true;
-          cardMesh.material[0].map = backTex; cardMesh.material[0].needsUpdate = true;
+          cardMesh.material[1].map = frontTex;
+          cardMesh.material[1].needsUpdate = true;
+          cardMesh.material[0].map = backTex;
+          cardMesh.material[0].needsUpdate = true;
         }
       });
     }
@@ -479,10 +528,9 @@
     function toggle3D() {
       is3D = !is3D;
       if (is3D) {
-        updatePreview(); // make sure latest state
+        updatePreview();
         if (!threeScene) init3D();
-        update3DTextures(); // capture while 2D still visible
-        // Hide 2D only AFTER capture
+        update3DTextures();
         setTimeout(() => {
           document.getElementById('2dContainer').classList.add('hidden');
           document.getElementById('2dContainerBack').classList.add('hidden');
@@ -525,7 +573,7 @@
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      console.log('%c🚀 PawPrint Business Card Designer — FIXED: text on top of graphics + 3D now renders correctly', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
