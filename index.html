@@ -15,7 +15,6 @@
     .card {
       width: 560px;
       height: 320px;
-      border-radius: 20px;
       background: linear-gradient(145deg, #f8f5f2, #ffffff);
       box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75),
                   inset 0 12px 24px rgba(255,255,255,0.75),
@@ -24,6 +23,7 @@
       overflow: hidden;
       position: relative;
       font-family: 'Inter', system-ui, sans-serif;
+      border-radius: 0; /* Sharp square corners like real business cards */
     }
     
     .card.gloss::before {
@@ -55,16 +55,6 @@
       z-index: 1;
     }
     
-    .card::after {
-      content: '';
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(212,175,135,0.3);
-      border-radius: 12px;
-      pointer-events: none;
-      z-index: 2;
-    }
-    
     .header-red {
       background: linear-gradient(to right, #7F0F2A, #B91C1C);
       box-shadow: 0 4px 12px rgba(127,15,42,0.55);
@@ -73,7 +63,7 @@
     .three-container {
       width: 560px;
       height: 320px;
-      border-radius: 20px;
+      border-radius: 0;
       overflow: hidden;
       box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75);
     }
@@ -298,7 +288,7 @@
     let threeScene, threeCamera, threeRenderer, cardMesh;
     let is3D = false;
 
-    // ============== INIT PREVIEWS (logo first, text last) ==============
+    // ============== INIT PREVIEWS - LOGO FIRST, TEXT LAST ==============
     function initPreviews() {
       const front = document.getElementById('frontPreview');
       front.innerHTML = `
@@ -573,7 +563,7 @@
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics + sharp square corners', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
