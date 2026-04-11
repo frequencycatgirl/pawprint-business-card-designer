@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Roboto+Slab:wght@400;700&family=Poppins:wght@400;600&family=Montserrat:wght@400;700&family=Oswald:wght@400;700&family=Lora:wght@400;700&family=Raleway:wght@400;700&display=swap');
-
     .card {
       width: 560px;
       height: 320px;
@@ -25,7 +24,7 @@
       font-family: 'Inter', system-ui, sans-serif;
       border-radius: 0; /* Sharp square corners like real business cards */
     }
-    
+   
     .card.gloss::before {
       content: '';
       position: absolute;
@@ -36,12 +35,12 @@
       mix-blend-mode: screen;
       animation: gloss-shine 8s linear infinite;
     }
-    
+   
     @keyframes gloss-shine {
       0% { transform: translateX(-150%) skew(20deg); }
       100% { transform: translateX(300%) skew(20deg); }
     }
-    
+   
     .card::before {
       content: '';
       position: absolute;
@@ -54,12 +53,12 @@
       mix-blend-mode: multiply;
       z-index: 1;
     }
-    
+   
     .header-red {
       background: linear-gradient(to right, #7F0F2A, #B91C1C);
       box-shadow: 0 4px 12px rgba(127,15,42,0.55);
     }
-    
+   
     .three-container {
       width: 560px;
       height: 320px;
@@ -88,7 +87,6 @@
       <div class="text-amber-200 text-sm font-mono tracking-widest">ULTRA EPIC MODE</div>
     </div>
   </header>
-
   <div class="max-w-7xl mx-auto px-8 py-12 flex gap-12">
     <!-- CONTROLS -->
     <div class="w-96 bg-zinc-900/95 backdrop-blur-2xl border border-zinc-700 rounded-3xl p-8 flex flex-col gap-8 shadow-2xl overflow-y-auto max-h-[calc(100vh-140px)]">
@@ -103,7 +101,6 @@
           <button onclick="loadTemplate(4)" class="col-span-2 bg-zinc-800 hover:bg-red-700 hover:text-white p-4 rounded-2xl text-sm font-semibold transition">Start Blank</button>
         </div>
       </div>
-
       <!-- Card Finish -->
       <div>
         <h3 class="text-xl font-bold mb-3 text-amber-400">Card Finish</h3>
@@ -112,7 +109,6 @@
           <button onclick="setFinish('gloss')" id="finish-gloss" class="flex-1 py-3 rounded-2xl border-2 border-transparent hover:border-amber-400 bg-zinc-800 text-white font-semibold">Gloss</button>
         </div>
       </div>
-
       <!-- Font Picker -->
       <div>
         <h3 class="text-xl font-bold mb-3 text-amber-400">Font Style</h3>
@@ -127,7 +123,6 @@
           <option value="Raleway">Raleway (Refined)</option>
         </select>
       </div>
-
       <!-- Front -->
       <div>
         <h3 class="text-xl font-bold mb-4 text-amber-400 flex justify-between items-center">
@@ -203,7 +198,6 @@
             </div>
             <input id="title" placeholder="Job Title" class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
           </div>
-
           <div class="grid grid-cols-3 gap-3">
             <input id="phone" placeholder="Phone" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
             <input id="email" placeholder="Email" class="bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none" oninput="updatePreview()">
@@ -211,7 +205,6 @@
           </div>
         </div>
       </div>
-
       <!-- Back -->
       <div>
         <h3 class="text-xl font-bold mb-4 text-amber-400 flex justify-between items-center">
@@ -231,7 +224,6 @@
           <textarea id="backText" rows="4" placeholder="Address, notes..." class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none resize-none" oninput="updatePreview()"></textarea>
         </div>
       </div>
-
       <div class="mt-auto pt-6 border-t border-zinc-700 space-y-4">
         <button onclick="toggle3D()" class="w-full bg-gradient-to-r from-purple-600 to-amber-400 text-white font-bold py-6 rounded-3xl text-2xl flex items-center justify-center gap-4">
           <i class="fas fa-cube"></i> SWITCH TO 3D PREVIEW
@@ -244,19 +236,17 @@
         </button>
       </div>
     </div>
-
     <!-- PREVIEWS -->
     <div class="flex-1 flex flex-col items-center gap-16 pt-8">
       <div id="2dContainer" class="w-full max-w-[600px]">
         <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">FRONT • 3.5" × 2"</div>
         <div id="frontPreview" class="card mx-auto relative"></div>
       </div>
-      
+     
       <div id="2dContainerBack" class="w-full max-w-[600px]">
         <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">BACK • 3.5" × 2"</div>
         <div id="backPreview" class="card mx-auto relative"></div>
       </div>
-
       <div id="3dContainer" class="hidden w-full max-w-[600px] flex-col items-center">
         <div class="text-center mb-4 font-mono text-xs tracking-[4px] text-amber-400">3D ROTATABLE CARD</div>
         <div id="threeCanvasContainer" class="three-container"></div>
@@ -266,13 +256,11 @@
       </div>
     </div>
   </div>
-
   <!-- FOOTER -->
   <footer class="header-red py-8 text-center text-amber-200 border-t-2 border-amber-400">
     <p class="text-lg">© PawPrint America • Business Card Designer</p>
     <p class="text-sm mt-2">Questions? <a href="mailto:print@pawprintamerica.com" class="underline hover:text-white">print@pawprintamerica.com</a></p>
   </footer>
-
   <script>
     // ============== STATE ==============
     let styles = {
@@ -287,41 +275,35 @@
     let backLogoPos = { x: 40, y: 30 }, backLogoScale = 1;
     let threeScene, threeCamera, threeRenderer, cardMesh;
     let is3D = false;
-
     // ============== INIT PREVIEWS - LOGO FIRST, TEXT LAST ==============
     function initPreviews() {
       const front = document.getElementById('frontPreview');
       front.innerHTML = `
         <div id="frontLogoContainer" class="logo-layer preview-layer absolute cursor-move" style="left:${frontLogoPos.x}px;top:${frontLogoPos.y}px;z-index:5;transform:scale(${frontLogoScale});"></div>
-        <div id="frontCompany" class="text-layer preview-layer text-3xl font-bold" style="left:60px;top:100px;width:420px;z-index:20;"></div>
-        <div id="frontTagline" class="text-layer preview-layer text-base italic" style="left:60px;top:140px;width:420px;z-index:20;"></div>
-        <div id="frontName" class="text-layer preview-layer text-2xl font-semibold" style="left:60px;top:200px;width:420px;z-index:20;"></div>
-        <div id="frontTitle" class="text-layer preview-layer text-lg" style="left:60px;top:235px;width:420px;z-index:20;"></div>
-        <div id="frontContact" class="text-layer preview-layer text-sm font-medium flex justify-between" style="left:60px;top:265px;width:420px;z-index:20;"></div>
+        <div id="frontCompany" class="text-layer preview-layer absolute text-3xl font-bold" style="left:60px;top:100px;width:420px;z-index:20;"></div>
+        <div id="frontTagline" class="text-layer preview-layer absolute text-base italic" style="left:60px;top:140px;width:420px;z-index:20;"></div>
+        <div id="frontName" class="text-layer preview-layer absolute text-2xl font-semibold" style="left:60px;top:200px;width:420px;z-index:20;"></div>
+        <div id="frontTitle" class="text-layer preview-layer absolute text-lg" style="left:60px;top:235px;width:420px;z-index:20;"></div>
+        <div id="frontContact" class="text-layer preview-layer absolute text-sm font-medium flex justify-between" style="left:60px;top:265px;width:420px;z-index:20;"></div>
       `;
-
       const back = document.getElementById('backPreview');
       back.innerHTML = `
         <div id="backLogoContainer" class="logo-layer preview-layer absolute cursor-move" style="left:${backLogoPos.x}px;top:${backLogoPos.y}px;z-index:5;transform:scale(${backLogoScale});"></div>
-        <div id="backTextDisplay" class="text-layer preview-layer text-sm leading-relaxed whitespace-pre-line" style="left:60px;top:60px;width:420px;height:180px;z-index:20;color:#111;"></div>
+        <div id="backTextDisplay" class="text-layer preview-layer absolute text-sm leading-relaxed whitespace-pre-line" style="left:60px;top:60px;width:420px;height:180px;z-index:20;color:#111;"></div>
         <div id="qrContainer" class="text-layer preview-layer absolute bottom-8 right-8 bg-white p-2 rounded-xl shadow-inner" style="z-index:20;"></div>
       `;
-
       makeDraggable('frontLogoContainer', 'front');
       makeDraggable('backLogoContainer', 'back');
     }
-
     function makeDraggable(id, side) {
       const el = document.getElementById(id);
       let pos = side === 'front' ? frontLogoPos : backLogoPos;
       let dragging = false, startX, startY;
-
       el.addEventListener('mousedown', e => {
         dragging = true;
         startX = e.clientX - pos.x;
         startY = e.clientY - pos.y;
       });
-
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
         pos.x = Math.max(0, Math.min(460, e.clientX - startX));
@@ -329,10 +311,8 @@
         el.style.left = pos.x + 'px';
         el.style.top = pos.y + 'px';
       });
-
       document.addEventListener('mouseup', () => dragging = false);
     }
-
     function updateLogoScale(side) {
       if (side === 'front') {
         frontLogoScale = parseFloat(document.getElementById('frontScale').value);
@@ -347,7 +327,6 @@
       }
       if (is3D) update3DTextures();
     }
-
     // ============== UPDATE PREVIEW - FORCE Z-INDEX EVERY TIME ==============
     function updatePreview() {
       // Front
@@ -360,20 +339,17 @@
         ${document.getElementById('email').value || 'you@company.com'} &nbsp;&nbsp;
         ${document.getElementById('website').value || 'www.yourwebsite.com'}
       `;
-
       const frontTextColor = document.getElementById('frontText').value;
       document.querySelectorAll('#frontPreview .text-layer').forEach(el => {
         el.style.color = frontTextColor;
         el.style.zIndex = '20';
       });
       document.getElementById('frontPreview').style.background = document.getElementById('frontBg').value;
-
       // Back
       document.getElementById('backTextDisplay').textContent = document.getElementById('backText').value || 'Additional information, address, or special notes go here...';
       document.getElementById('backTextDisplay').style.color = document.getElementById('backTextColor').value;
       document.getElementById('backTextDisplay').style.zIndex = '20';
       document.getElementById('backPreview').style.background = '#f8f5f2';
-
       // Force logo z-index
       const frontLogo = document.getElementById('frontLogoContainer');
       const backLogo = document.getElementById('backLogoContainer');
@@ -387,13 +363,10 @@
         const img = backLogo.querySelector('img');
         if (img) img.style.zIndex = '5';
       }
-
       applyStyles();
       generateRealQR();
-
       if (is3D) setTimeout(update3DTextures, 80);
     }
-
     function applyStyles() {
       ['company','tagline','name','title'].forEach(key => {
         const el = document.getElementById('front' + key.charAt(0).toUpperCase() + key.slice(1));
@@ -406,17 +379,14 @@
         }
       });
     }
-
     function setAlignment(field, align) {
       styles[field].align = align;
       updatePreview();
     }
-
     function toggleStyle(field, prop) {
       styles[field][prop] = !styles[field][prop];
       updatePreview();
     }
-
     // ============== LOGO UPLOAD - FORCE Z-INDEX ==============
     function handleLogoUpload(input, side) {
       const file = input.files[0];
@@ -432,7 +402,6 @@
       reader.readAsDataURL(file);
       if (is3D) setTimeout(update3DTextures, 100);
     }
-
     // ============== REAL QR ==============
     function generateRealQR() {
       const container = document.getElementById('qrContainer');
@@ -440,7 +409,6 @@
       const website = document.getElementById('website').value || 'https://pawprintamerica.com';
       new QRCode(container, { text: website, width: 110, height: 110, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
     }
-
     // ============== FINISH & FONT ==============
     function setFinish(mode) {
       currentFinish = mode;
@@ -449,12 +417,10 @@
       document.getElementById('frontPreview').classList.toggle('gloss', mode === 'gloss');
       document.getElementById('backPreview').classList.toggle('gloss', mode === 'gloss');
     }
-
     function applyFont() {
       currentFont = document.getElementById('fontSelect').value;
       updatePreview();
     }
-
     // ============== TEMPLATES ==============
     function loadTemplate(n) {
       const templates = [
@@ -471,7 +437,6 @@
       });
       updatePreview();
     }
-
     // ============== 3D ==============
     function init3D() {
       const container = document.getElementById('threeCanvasContainer');
@@ -483,20 +448,16 @@
       threeRenderer = new THREE.WebGLRenderer({ antialias: true });
       threeRenderer.setSize(560, 320);
       container.appendChild(threeRenderer.domElement);
-
       const geometry = new THREE.BoxGeometry(380, 220, 8);
       const frontMat = new THREE.MeshPhongMaterial({ shininess: 40 });
       const backMat = new THREE.MeshPhongMaterial({ shininess: 40 });
       cardMesh = new THREE.Mesh(geometry, [backMat, frontMat, frontMat, frontMat, frontMat, frontMat]);
       threeScene.add(cardMesh);
-
       const ambient = new THREE.AmbientLight(0xffffff, 0.7);
       const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
       dirLight.position.set(300, 400, 500);
       threeScene.add(ambient, dirLight);
-
       update3DTextures();
-
       let isRotating = false, prevX = 0;
       container.addEventListener('mousedown', e => { isRotating = true; prevX = e.clientX; });
       container.addEventListener('mousemove', e => {
@@ -504,11 +465,9 @@
         prevX = e.clientX;
       });
       container.addEventListener('mouseup', () => isRotating = false);
-
       function animate() { requestAnimationFrame(animate); threeRenderer.render(threeScene, threeCamera); }
       animate();
     }
-
     function update3DTextures() {
       Promise.all([
         html2canvas(document.getElementById('frontPreview'), {scale: 3}),
@@ -524,7 +483,6 @@
         }
       });
     }
-
     function toggle3D() {
       is3D = !is3D;
       if (is3D) {
@@ -540,7 +498,6 @@
         document.getElementById('2dContainerBack').classList.remove('hidden');
       }
     }
-
     // ============== EXPORT & EMAIL ==============
     function exportCards() {
       const opts = { scale: 4, useCORS: true };
@@ -560,14 +517,12 @@
       }, 300);
       alert("✅ High-resolution front & back PNGs downloaded (300 DPI). Ready for print!");
     }
-
     function emailToPrint() {
       exportCards();
       setTimeout(() => {
         window.location.href = `mailto:print@pawprintamerica.com?subject=Custom Business Card Order - Front & Back Attached&body=Attached are my custom business card designs (front and back). Please provide pricing and turnaround time. Thank you!`;
       }, 600);
     }
-
     // ============== BOOTSTRAP ==============
     window.onload = () => {
       initPreviews();
