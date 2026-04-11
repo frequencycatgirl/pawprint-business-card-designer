@@ -72,7 +72,7 @@
       position: absolute;
       cursor: move;
       user-select: none;
-      padding: 2px 6px; /* tiny padding so you can grab empty space easily */
+      padding: 2px 6px;
       min-width: 50px;
     }
   </style>
@@ -97,11 +97,11 @@
     </div>
   </header>
   <div class="max-w-7xl mx-auto px-8 py-12 flex gap-12">
-    <!-- CONTROLS -->
-    <div class="w-96 bg-zinc-900/95 backdrop-blur-2xl border border-zinc-700 rounded-3xl p-8 flex flex-col gap-8 shadow-2xl overflow-y-auto max-h-[calc(100vh-140px)]">
+    <!-- CONTROLS - NOW MORE COMPACT -->
+    <div class="w-96 bg-zinc-900/95 backdrop-blur-2xl border border-zinc-700 rounded-3xl p-6 flex flex-col gap-6 shadow-2xl overflow-y-auto max-h-[calc(100vh-140px)]">
       <!-- Templates -->
       <div>
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-3 text-amber-400"><i class="fas fa-th-large"></i> Templates</h2>
+        <h2 class="text-2xl font-bold mb-3 flex items-center gap-3 text-amber-400"><i class="fas fa-th-large"></i> Templates</h2>
         <div class="grid grid-cols-2 gap-3">
           <button onclick="loadTemplate(0)" class="bg-zinc-800 hover:bg-red-700 hover:text-white p-4 rounded-2xl text-sm font-semibold transition">Minimalist</button>
           <button onclick="loadTemplate(1)" class="bg-zinc-800 hover:bg-red-700 hover:text-white p-4 rounded-2xl text-sm font-semibold transition">Professional</button>
@@ -134,14 +134,14 @@
       </div>
       <!-- Front -->
       <div>
-        <h3 class="text-xl font-bold mb-4 text-amber-400 flex justify-between items-center">
+        <h3 class="text-xl font-bold mb-3 text-amber-400 flex justify-between items-center">
           FRONT
           <div class="flex gap-2">
             <input type="color" id="frontBg" value="#f8f5f2" onchange="updatePreview()" class="w-9 h-9 rounded-2xl cursor-pointer border border-zinc-700">
             <input type="color" id="frontText" value="#111111" onchange="updatePreview()" class="w-9 h-9 rounded-2xl cursor-pointer border border-zinc-700">
           </div>
         </h3>
-        <div class="space-y-6 text-sm">
+        <div class="space-y-4 text-sm">
           <div>
             <label class="block text-zinc-400 mb-1">Logo / Graphic (drag + scale)</label>
             <input type="file" id="frontLogo" accept="image/*" onchange="handleLogoUpload(this, 'front')" class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:bg-amber-400 file:text-black file:font-semibold">
@@ -216,11 +216,11 @@
       </div>
       <!-- Back -->
       <div>
-        <h3 class="text-xl font-bold mb-4 text-amber-400 flex justify-between items-center">
+        <h3 class="text-xl font-bold mb-3 text-amber-400 flex justify-between items-center">
           BACK
           <input type="color" id="backTextColor" value="#111111" onchange="updatePreview()" class="w-9 h-9 rounded-2xl cursor-pointer border border-zinc-700">
         </h3>
-        <div class="space-y-6 text-sm">
+        <div class="space-y-4 text-sm">
           <div>
             <label class="block text-zinc-400 mb-1">Logo / Graphic (drag + scale)</label>
             <input type="file" id="backLogo" accept="image/*" onchange="handleLogoUpload(this, 'back')" class="block w-full text-sm file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:bg-amber-400 file:text-black file:font-semibold">
@@ -233,7 +233,7 @@
           <textarea id="backText" rows="4" placeholder="Address, notes..." class="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-400 p-4 rounded-2xl outline-none resize-none" oninput="updatePreview()"></textarea>
         </div>
       </div>
-      <div class="mt-auto pt-6 border-t border-zinc-700 space-y-4">
+      <div class="mt-auto pt-4 border-t border-zinc-700 space-y-4">
         <button onclick="toggle3D()" class="w-full bg-gradient-to-r from-purple-600 to-amber-400 text-white font-bold py-6 rounded-3xl text-2xl flex items-center justify-center gap-4">
           <i class="fas fa-cube"></i> SWITCH TO 3D PREVIEW
         </button>
@@ -283,7 +283,6 @@
     let frontLogoPos = { x: 40, y: 30 }, frontLogoScale = 1;
     let backLogoPos = { x: 40, y: 30 }, backLogoScale = 1;
 
-    // NEW: Text positions state (default positions)
     let textPositions = {
       front: {
         company: { x: 60, y: 100 },
@@ -320,11 +319,9 @@
         <div id="qrContainer" class="text-layer preview-layer absolute bottom-8 right-8 bg-white p-2 rounded-xl shadow-inner" style="z-index:20;"></div>
       `;
 
-      // Make logo draggable (existing)
       makeDraggable('frontLogoContainer', 'front');
       makeDraggable('backLogoContainer', 'back');
 
-      // Make ALL text layers draggable
       makeTextDraggable('frontCompany', 'front', 'company');
       makeTextDraggable('frontTagline', 'front', 'tagline');
       makeTextDraggable('frontName', 'front', 'name');
@@ -333,7 +330,6 @@
       makeTextDraggable('backTextDisplay', 'back', 'backTextDisplay');
     }
 
-    // ============== GENERIC DRAG FOR LOGOS (unchanged) ==============
     function makeDraggable(id, side) {
       const el = document.getElementById(id);
       let pos = side === 'front' ? frontLogoPos : backLogoPos;
@@ -354,7 +350,6 @@
       document.addEventListener('mouseup', () => dragging = false);
     }
 
-    // ============== NEW: TEXT DRAG HANDLER ==============
     function makeTextDraggable(id, side, key) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -366,7 +361,7 @@
         dragging = true;
         startX = e.clientX - pos.x;
         startY = e.clientY - pos.y;
-        el.style.zIndex = '30'; // bring to front while dragging
+        el.style.zIndex = '30';
         e.stopPropagation();
       });
 
@@ -402,9 +397,7 @@
       if (is3D) update3DTextures();
     }
 
-    // ============== UPDATE PREVIEW ==============
     function updatePreview() {
-      // Front texts
       document.getElementById('frontCompany').textContent = document.getElementById('company').value || 'Company Name';
       document.getElementById('frontTagline').textContent = document.getElementById('tagline').value || '';
       document.getElementById('frontName').textContent = document.getElementById('name').value || 'Your Name';
@@ -423,13 +416,11 @@
 
       document.getElementById('frontPreview').style.background = document.getElementById('frontBg').value;
 
-      // Back
       document.getElementById('backTextDisplay').textContent = document.getElementById('backText').value || 'Additional information, address, or special notes go here...';
       document.getElementById('backTextDisplay').style.color = document.getElementById('backTextColor').value;
       document.getElementById('backTextDisplay').style.zIndex = '20';
       document.getElementById('backPreview').style.background = '#f8f5f2';
 
-      // Force logo z-index
       const frontLogo = document.getElementById('frontLogoContainer');
       const backLogo = document.getElementById('backLogoContainer');
       if (frontLogo) frontLogo.style.zIndex = '5';
@@ -509,7 +500,6 @@
         const el = document.getElementById(key);
         if (el) el.value = t[key] || '';
       });
-      // Reset positions to defaults when loading template
       textPositions = {
         front: {
           company: { x: 60, y: 100 },
@@ -522,11 +512,11 @@
           backTextDisplay: { x: 60, y: 60 }
         }
       };
-      initPreviews(); // re-init so positions are applied
+      initPreviews();
       updatePreview();
     }
 
-    // ============== 3D - FIXED ==============
+    // ============== 3D - FULLY FIXED ==============
     function init3D() {
       const container = document.getElementById('threeCanvasContainer');
       container.innerHTML = '';
@@ -542,15 +532,13 @@
       const frontMat = new THREE.MeshPhongMaterial({ shininess: 40 });
       const backMat = new THREE.MeshPhongMaterial({ shininess: 40 });
       
-      // FIXED: Correct material order for BoxGeometry
-      // [right, left, top, bottom, +Z/front, -Z/back]
       cardMesh = new THREE.Mesh(geometry, [
-        new THREE.MeshPhongMaterial({ shininess: 40 }), // 0 right (thin edge)
-        new THREE.MeshPhongMaterial({ shininess: 40 }), // 1 left (thin edge)
-        new THREE.MeshPhongMaterial({ shininess: 40 }), // 2 top (thin edge)
-        new THREE.MeshPhongMaterial({ shininess: 40 }), // 3 bottom (thin edge)
-        frontMat,                                       // 4 +Z = FRONT face (large)
-        backMat                                         // 5 -Z = BACK face (large)
+        new THREE.MeshPhongMaterial({ shininess: 40 }), // right edge
+        new THREE.MeshPhongMaterial({ shininess: 40 }), // left edge
+        new THREE.MeshPhongMaterial({ shininess: 40 }), // top edge
+        new THREE.MeshPhongMaterial({ shininess: 40 }), // bottom edge
+        frontMat,                                       // +Z = FRONT face
+        backMat                                         // -Z = BACK face
       ]);
       
       threeScene.add(cardMesh);
@@ -578,10 +566,9 @@
         if (cardMesh) {
           const frontTex = new THREE.CanvasTexture(frontCanvas);
           const backTex = new THREE.CanvasTexture(backCanvas);
-          // FIXED: Apply textures to the LARGE faces (+Z / -Z)
-          cardMesh.material[4].map = frontTex;   // front of card
+          cardMesh.material[4].map = frontTex;
           cardMesh.material[4].needsUpdate = true;
-          cardMesh.material[5].map = backTex;    // back of card
+          cardMesh.material[5].map = backTex;
           cardMesh.material[5].needsUpdate = true;
         }
       });
@@ -596,10 +583,12 @@
         setTimeout(() => {
           document.getElementById('2dContainer').classList.add('hidden');
           document.getElementById('2dContainerBack').classList.add('hidden');
+          document.getElementById('3dContainer').classList.remove('hidden');   // FIXED: show 3D
         }, 100);
       } else {
         document.getElementById('2dContainer').classList.remove('hidden');
         document.getElementById('2dContainerBack').classList.remove('hidden');
+        document.getElementById('3dContainer').classList.add('hidden');       // FIXED: hide 3D
       }
     }
 
@@ -634,7 +623,7 @@
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      console.log('%c🚀 PawPrint Business Card Designer — Text is now fully draggable on both sides + 3D card FIXED', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — 3D card now visible + sidebar compacted', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
