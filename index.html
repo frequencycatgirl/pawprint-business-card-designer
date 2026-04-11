@@ -377,8 +377,16 @@
       // Force logo z-index
       const frontLogo = document.getElementById('frontLogoContainer');
       const backLogo = document.getElementById('backLogoContainer');
-      if (frontLogo) frontLogo.style.zIndex = '5';
-      if (backLogo) backLogo.style.zIndex = '5';
+      if (frontLogo) {
+        frontLogo.style.zIndex = '5';
+        const img = frontLogo.querySelector('img');
+        if (img) img.style.zIndex = '5';
+      }
+      if (backLogo) {
+        backLogo.style.zIndex = '5';
+        const img = backLogo.querySelector('img');
+        if (img) img.style.zIndex = '5';
+      }
 
       applyStyles();
       generateRealQR();
@@ -418,6 +426,8 @@
         const container = document.getElementById(side + 'LogoContainer');
         container.innerHTML = `<img src="${e.target.result}" class="logo-img max-h-[280px] max-w-[520px] object-contain shadow-md" style="transform:scale(${side==='front'?frontLogoScale:backLogoScale});">`;
         container.style.zIndex = '5';
+        const img = container.querySelector('img');
+        if (img) img.style.zIndex = '5';
       };
       reader.readAsDataURL(file);
       if (is3D) setTimeout(update3DTextures, 100);
@@ -563,7 +573,7 @@
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics + sharp corners', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
