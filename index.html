@@ -22,7 +22,7 @@
       overflow: hidden;
       position: relative;
       font-family: 'Inter', system-ui, sans-serif;
-      border-radius: 0; /* Sharp square corners like real business cards */
+      border-radius: 0;
     }
    
     .card.gloss::before {
@@ -65,6 +65,15 @@
       border-radius: 0;
       overflow: hidden;
       box-shadow: 0 50px 100px -30px rgb(0 0 0 / 0.75);
+    }
+
+    /* Make text layers draggable */
+    .text-layer {
+      position: absolute;
+      cursor: move;
+      user-select: none;
+      padding: 2px 6px; /* tiny padding so you can grab empty space easily */
+      min-width: 50px;
     }
   </style>
 </head>
@@ -273,28 +282,58 @@
     let currentFinish = 'matte';
     let frontLogoPos = { x: 40, y: 30 }, frontLogoScale = 1;
     let backLogoPos = { x: 40, y: 30 }, backLogoScale = 1;
+
+    // NEW: Text positions state (default positions)
+    let textPositions = {
+      front: {
+        company: { x: 60, y: 100 },
+        tagline: { x: 60, y: 140 },
+        name: { x: 60, y: 200 },
+        title: { x: 60, y: 235 },
+        contact: { x: 60, y: 265 }
+      },
+      back: {
+        backTextDisplay: { x: 60, y: 60 }
+      }
+    };
+
     let threeScene, threeCamera, threeRenderer, cardMesh;
     let is3D = false;
-    // ============== INIT PREVIEWS - LOGO FIRST, TEXT LAST ==============
+
+    // ============== INIT PREVIEWS ==============
     function initPreviews() {
       const front = document.getElementById('frontPreview');
       front.innerHTML = `
         <div id="frontLogoContainer" class="logo-layer preview-layer absolute cursor-move" style="left:${frontLogoPos.x}px;top:${frontLogoPos.y}px;z-index:5;transform:scale(${frontLogoScale});"></div>
-        <div id="frontCompany" class="text-layer preview-layer absolute text-3xl font-bold" style="left:60px;top:100px;width:420px;z-index:20;"></div>
-        <div id="frontTagline" class="text-layer preview-layer absolute text-base italic" style="left:60px;top:140px;width:420px;z-index:20;"></div>
-        <div id="frontName" class="text-layer preview-layer absolute text-2xl font-semibold" style="left:60px;top:200px;width:420px;z-index:20;"></div>
-        <div id="frontTitle" class="text-layer preview-layer absolute text-lg" style="left:60px;top:235px;width:420px;z-index:20;"></div>
-        <div id="frontContact" class="text-layer preview-layer absolute text-sm font-medium flex justify-between" style="left:60px;top:265px;width:420px;z-index:20;"></div>
+        
+        <div id="frontCompany" class="text-layer preview-layer" style="left:${textPositions.front.company.x}px;top:${textPositions.front.company.y}px;width:420px;z-index:20;"></div>
+        <div id="frontTagline" class="text-layer preview-layer" style="left:${textPositions.front.tagline.x}px;top:${textPositions.front.tagline.y}px;width:420px;z-index:20;"></div>
+        <div id="frontName" class="text-layer preview-layer" style="left:${textPositions.front.name.x}px;top:${textPositions.front.name.y}px;width:420px;z-index:20;"></div>
+        <div id="frontTitle" class="text-layer preview-layer" style="left:${textPositions.front.title.x}px;top:${textPositions.front.title.y}px;width:420px;z-index:20;"></div>
+        <div id="frontContact" class="text-layer preview-layer flex justify-between" style="left:${textPositions.front.contact.x}px;top:${textPositions.front.contact.y}px;width:420px;z-index:20;"></div>
       `;
+
       const back = document.getElementById('backPreview');
       back.innerHTML = `
         <div id="backLogoContainer" class="logo-layer preview-layer absolute cursor-move" style="left:${backLogoPos.x}px;top:${backLogoPos.y}px;z-index:5;transform:scale(${backLogoScale});"></div>
-        <div id="backTextDisplay" class="text-layer preview-layer absolute text-sm leading-relaxed whitespace-pre-line" style="left:60px;top:60px;width:420px;height:180px;z-index:20;color:#111;"></div>
+        <div id="backTextDisplay" class="text-layer preview-layer whitespace-pre-line" style="left:${textPositions.back.backTextDisplay.x}px;top:${textPositions.back.backTextDisplay.y}px;width:420px;height:180px;z-index:20;color:#111;"></div>
         <div id="qrContainer" class="text-layer preview-layer absolute bottom-8 right-8 bg-white p-2 rounded-xl shadow-inner" style="z-index:20;"></div>
       `;
+
+      // Make logo draggable (existing)
       makeDraggable('frontLogoContainer', 'front');
       makeDraggable('backLogoContainer', 'back');
+
+      // Make ALL text layers draggable
+      makeTextDraggable('frontCompany', 'front', 'company');
+      makeTextDraggable('frontTagline', 'front', 'tagline');
+      makeTextDraggable('frontName', 'front', 'name');
+      makeTextDraggable('frontTitle', 'front', 'title');
+      makeTextDraggable('frontContact', 'front', 'contact');
+      makeTextDraggable('backTextDisplay', 'back', 'backTextDisplay');
     }
+
+    // ============== GENERIC DRAG FOR LOGOS (unchanged) ==============
     function makeDraggable(id, side) {
       const el = document.getElementById(id);
       let pos = side === 'front' ? frontLogoPos : backLogoPos;
@@ -303,16 +342,51 @@
         dragging = true;
         startX = e.clientX - pos.x;
         startY = e.clientY - pos.y;
+        e.stopPropagation();
       });
       document.addEventListener('mousemove', e => {
         if (!dragging) return;
-        pos.x = Math.max(0, Math.min(460, e.clientX - startX));
-        pos.y = Math.max(0, Math.min(280, e.clientY - startY));
+        pos.x = Math.max(0, Math.min(500, e.clientX - startX));
+        pos.y = Math.max(0, Math.min(300, e.clientY - startY));
         el.style.left = pos.x + 'px';
         el.style.top = pos.y + 'px';
       });
       document.addEventListener('mouseup', () => dragging = false);
     }
+
+    // ============== NEW: TEXT DRAG HANDLER ==============
+    function makeTextDraggable(id, side, key) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      let pos = side === 'front' ? textPositions.front[key] : textPositions.back[key];
+      let dragging = false, startX, startY;
+
+      el.addEventListener('mousedown', e => {
+        dragging = true;
+        startX = e.clientX - pos.x;
+        startY = e.clientY - pos.y;
+        el.style.zIndex = '30'; // bring to front while dragging
+        e.stopPropagation();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        pos.x = Math.max(0, Math.min(500, e.clientX - startX));
+        pos.y = Math.max(0, Math.min(300, e.clientY - startY));
+        el.style.left = pos.x + 'px';
+        el.style.top = pos.y + 'px';
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (dragging) {
+          dragging = false;
+          el.style.zIndex = '20';
+          if (is3D) update3DTextures();
+        }
+      });
+    }
+
     function updateLogoScale(side) {
       if (side === 'front') {
         frontLogoScale = parseFloat(document.getElementById('frontScale').value);
@@ -327,9 +401,10 @@
       }
       if (is3D) update3DTextures();
     }
-    // ============== UPDATE PREVIEW - FORCE Z-INDEX EVERY TIME ==============
+
+    // ============== UPDATE PREVIEW ==============
     function updatePreview() {
-      // Front
+      // Front texts
       document.getElementById('frontCompany').textContent = document.getElementById('company').value || 'Company Name';
       document.getElementById('frontTagline').textContent = document.getElementById('tagline').value || '';
       document.getElementById('frontName').textContent = document.getElementById('name').value || 'Your Name';
@@ -339,34 +414,32 @@
         ${document.getElementById('email').value || 'you@company.com'} &nbsp;&nbsp;
         ${document.getElementById('website').value || 'www.yourwebsite.com'}
       `;
+
       const frontTextColor = document.getElementById('frontText').value;
       document.querySelectorAll('#frontPreview .text-layer').forEach(el => {
         el.style.color = frontTextColor;
         el.style.zIndex = '20';
       });
+
       document.getElementById('frontPreview').style.background = document.getElementById('frontBg').value;
+
       // Back
       document.getElementById('backTextDisplay').textContent = document.getElementById('backText').value || 'Additional information, address, or special notes go here...';
       document.getElementById('backTextDisplay').style.color = document.getElementById('backTextColor').value;
       document.getElementById('backTextDisplay').style.zIndex = '20';
       document.getElementById('backPreview').style.background = '#f8f5f2';
+
       // Force logo z-index
       const frontLogo = document.getElementById('frontLogoContainer');
       const backLogo = document.getElementById('backLogoContainer');
-      if (frontLogo) {
-        frontLogo.style.zIndex = '5';
-        const img = frontLogo.querySelector('img');
-        if (img) img.style.zIndex = '5';
-      }
-      if (backLogo) {
-        backLogo.style.zIndex = '5';
-        const img = backLogo.querySelector('img');
-        if (img) img.style.zIndex = '5';
-      }
+      if (frontLogo) frontLogo.style.zIndex = '5';
+      if (backLogo) backLogo.style.zIndex = '5';
+
       applyStyles();
       generateRealQR();
       if (is3D) setTimeout(update3DTextures, 80);
     }
+
     function applyStyles() {
       ['company','tagline','name','title'].forEach(key => {
         const el = document.getElementById('front' + key.charAt(0).toUpperCase() + key.slice(1));
@@ -379,15 +452,17 @@
         }
       });
     }
+
     function setAlignment(field, align) {
       styles[field].align = align;
       updatePreview();
     }
+
     function toggleStyle(field, prop) {
       styles[field][prop] = !styles[field][prop];
       updatePreview();
     }
-    // ============== LOGO UPLOAD - FORCE Z-INDEX ==============
+
     function handleLogoUpload(input, side) {
       const file = input.files[0];
       if (!file) return;
@@ -396,20 +471,18 @@
         const container = document.getElementById(side + 'LogoContainer');
         container.innerHTML = `<img src="${e.target.result}" class="logo-img max-h-[280px] max-w-[520px] object-contain shadow-md" style="transform:scale(${side==='front'?frontLogoScale:backLogoScale});">`;
         container.style.zIndex = '5';
-        const img = container.querySelector('img');
-        if (img) img.style.zIndex = '5';
       };
       reader.readAsDataURL(file);
       if (is3D) setTimeout(update3DTextures, 100);
     }
-    // ============== REAL QR ==============
+
     function generateRealQR() {
       const container = document.getElementById('qrContainer');
       container.innerHTML = '';
       const website = document.getElementById('website').value || 'https://pawprintamerica.com';
       new QRCode(container, { text: website, width: 110, height: 110, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
     }
-    // ============== FINISH & FONT ==============
+
     function setFinish(mode) {
       currentFinish = mode;
       document.getElementById('finish-matte').classList.toggle('border-amber-400', mode === 'matte');
@@ -417,11 +490,12 @@
       document.getElementById('frontPreview').classList.toggle('gloss', mode === 'gloss');
       document.getElementById('backPreview').classList.toggle('gloss', mode === 'gloss');
     }
+
     function applyFont() {
       currentFont = document.getElementById('fontSelect').value;
       updatePreview();
     }
-    // ============== TEMPLATES ==============
+
     function loadTemplate(n) {
       const templates = [
         {company:"PawPrint America", tagline:"You Name It... We Print It", name:"Jane Doe", title:"Creative Director", phone:"(305) 555-0198", email:"jane@pawprintamerica.com", website:"pawprintamerica.com", backText:"123 Print Lane\nDania Beach, FL 33004"},
@@ -435,9 +509,24 @@
         const el = document.getElementById(key);
         if (el) el.value = t[key] || '';
       });
+      // Reset positions to defaults when loading template
+      textPositions = {
+        front: {
+          company: { x: 60, y: 100 },
+          tagline: { x: 60, y: 140 },
+          name: { x: 60, y: 200 },
+          title: { x: 60, y: 235 },
+          contact: { x: 60, y: 265 }
+        },
+        back: {
+          backTextDisplay: { x: 60, y: 60 }
+        }
+      };
+      initPreviews(); // re-init so positions are applied
       updatePreview();
     }
-    // ============== 3D ==============
+
+    // ============== 3D (unchanged except texture update call) ==============
     function init3D() {
       const container = document.getElementById('threeCanvasContainer');
       container.innerHTML = '';
@@ -468,6 +557,7 @@
       function animate() { requestAnimationFrame(animate); threeRenderer.render(threeScene, threeCamera); }
       animate();
     }
+
     function update3DTextures() {
       Promise.all([
         html2canvas(document.getElementById('frontPreview'), {scale: 3}),
@@ -483,6 +573,7 @@
         }
       });
     }
+
     function toggle3D() {
       is3D = !is3D;
       if (is3D) {
@@ -498,7 +589,7 @@
         document.getElementById('2dContainerBack').classList.remove('hidden');
       }
     }
-    // ============== EXPORT & EMAIL ==============
+
     function exportCards() {
       const opts = { scale: 4, useCORS: true };
       html2canvas(document.getElementById('frontPreview'), opts).then(c => {
@@ -517,18 +608,20 @@
       }, 300);
       alert("✅ High-resolution front & back PNGs downloaded (300 DPI). Ready for print!");
     }
+
     function emailToPrint() {
       exportCards();
       setTimeout(() => {
         window.location.href = `mailto:print@pawprintamerica.com?subject=Custom Business Card Order - Front & Back Attached&body=Attached are my custom business card designs (front and back). Please provide pricing and turnaround time. Thank you!`;
       }, 600);
     }
+
     // ============== BOOTSTRAP ==============
     window.onload = () => {
       initPreviews();
       loadTemplate(0);
       generateRealQR();
-      console.log('%c🚀 PawPrint Business Card Designer — Text now guaranteed on top of graphics', 'color:#F59E0B; font-size:18px; font-weight:bold');
+      console.log('%c🚀 PawPrint Business Card Designer — Text is now fully draggable on both sides', 'color:#F59E0B; font-size:18px; font-weight:bold');
     };
   </script>
 </body>
